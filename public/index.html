@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Personal Copilot Local</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="app.css" />
+  <!-- Monaco loader -->
+  <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.38.0/min/vs/loader.js"></script>
+  <!-- Marked for markdown rendering -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <!-- Highlight.js for code highlighting -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.8.0/styles/github-dark.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.8.0/lib/common.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div style="display:flex;align-items:center;gap:12px">
+        <strong>Personal Copilot</strong>
+        <span id="currentPath" style="opacity:0.8;font-size:13px"></span>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <select id="providerSelect" style="padding:6px;border-radius:6px;background:#081228;color:#e6eef8">
+          <option value="openai">OpenAI</option>
+          <option value="qwen">Local Qwen</option>
+        </select>
+
+        <div class="view-toggle" role="tablist" aria-label="file view toggles">
+          <button class="btn small" id="viewEditorBtn" title="Editor">Editor</button>
+          <button class="btn small" id="viewPreviewBtn" title="Preview">Preview</button>
+          <button class="btn small" id="viewSheetBtn" title="Sheet">Sheet</button>
+        </div>
+
+        <button class="btn" id="saveBtn">Save</button>
+        <button class="btn secondary" id="newBtn">New</button>
+        <button class="btn secondary" id="delBtn">Delete</button>
+
+        <button class="btn" id="historyBtn">History</button>
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <h3>Files</h3>
+      <div id="fileList"></div>
+    </div>
+
+    <div class="editor-pane">
+      <div id="editor" class="mono-editor"></div>
+      <div id="preview" class="markdown-preview" style="display:none"></div>
+      <div id="sheet" class="sheet-view" style="display:none">
+        <div class="sheet-controls">
+          <button id="sheetSaveBtn" class="btn">Save Sheet</button>
+          <button id="sheetReparseBtn" class="btn secondary">Reparse</button>
+        </div>
+        <div id="sheetTableWrap" class="sheet-table-wrap"></div>
+      </div>
+    </div>
+
+    <div class="chat">
+      <h3>Assistant</h3>
+      <div class="chat-area">
+        <div id="messages" class="messages"></div>
+        <div class="chat-input">
+          <textarea id="chatInput" placeholder="Ask the assistant to create, edit, delete files or do reviews..."></textarea>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <button class="btn" id="sendBtn">Send</button>
+            <label style="font-size:12px;color:#a9b9d7;margin-top:6px">
+              <input type="checkbox" id="streamToggle" checked /> Stream response
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Preview modal -->
+  <div id="previewModal" class="modal" style="display:none">
+    <div class="modal-content">
+      <h3>Assistant Proposed Changes</h3>
+      <div id="previewList" class="preview-list"></div>
+      <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
+        <input id="commitMsg" placeholder="Commit message (optional)" style="flex:1;padding:8px;border-radius:6px;background:#071228;border:1px solid rgba(255,255,255,0.04);color:#e6eef8" />
+        <button id="applyBtn" class="btn">Apply Selected</button>
+        <button id="cancelPreviewBtn" class="btn secondary">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- History modal -->
+  <div id="historyModal" class="modal" style="display:none">
+    <div class="modal-content">
+      <h3>Git History</h3>
+      <div id="historyList" class="preview-list"></div>
+      <div style="margin-top:12px;display:flex;gap:8px;align-items:center">
+        <button id="closeHistoryBtn" class="btn secondary">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="client.js"></script>
+</body>
+</html>
