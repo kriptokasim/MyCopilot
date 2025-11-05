@@ -1,0 +1,1 @@
+{"name": "personal-copilot-local","version": "0.3.0","type": "module","scripts": {"start": "node server.js","zip": "node zip.js"},"dependencies": {"express": "^4.18.2","body-parser": "^1.20.2","node-fetch": "^3.4.1","dotenv": "^16.3.1","diff": "^5.1.0","archiver": "^5.3.1"}}
