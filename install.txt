@@ -1,0 +1,4 @@
+After saving the files above, in your project root:
+npm install
+node zip.js
+This creates personal-copilot-local.zip (excludes node_modules and .git). Transfer/download that zip if you want to move it elsewhere.
